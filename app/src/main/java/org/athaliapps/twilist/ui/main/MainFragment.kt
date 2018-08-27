@@ -26,8 +26,4 @@ class MainFragment : Fragment() {
         binding.setLifecycleOwner(this)
         return binding.root
     }
-
-//    override fun onActivityCreated(savedInstanceState: Bundle?) {
-//        super.onActivityCreated(savedInstanceState)
-//    }
 }
