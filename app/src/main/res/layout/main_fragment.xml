@@ -27,10 +27,11 @@
         android:id="@+id/datButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="@{viewmodel.onButtonClicked}"
         android:text="load the posts"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:customOnClickCoroutine="@{viewmodel::onButtonClickedCustom}"
+        />
 
 </android.support.constraint.ConstraintLayout>
 </layout>
