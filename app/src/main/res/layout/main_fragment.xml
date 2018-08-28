@@ -4,6 +4,9 @@
         <variable
             name="viewmodel"
             type="org.athaliapps.twilist.ui.main.MainViewModel"/>
+        <import type="kotlinx.coroutines.experimental.Job"/>
+        <import type="kotlin.coroutines.experimental.Continuation"/>
+"
     </data>
 <android.support.constraint.ConstraintLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -18,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@{viewmodel.text}"
-        app:layout_constraintTop_toBottomOf="@id/datButton"
+        app:layout_constraintTop_toBottomOf="@id/datButton2"
         android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -30,8 +33,27 @@
         android:text="load the posts"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:customOnClickCoroutine="@{viewmodel::onButtonClickedCustom}"
+        app:customOnClickCoroutine="@{viewmodel.onButtonClickHelper}"
         />
 
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/datButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="cancel the posts"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/datButton"
+        android:onClick="@{viewmodel::cancelLoad}"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/posts_recycler_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        app:data="@{viewmodel.posts}"
+        app:layout_constraintTop_toBottomOf="@+id/datButton2"
+        />
 </android.support.constraint.ConstraintLayout>
 </layout>

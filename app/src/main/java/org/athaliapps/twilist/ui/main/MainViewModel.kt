@@ -3,46 +3,40 @@ package org.athaliapps.twilist.ui.main
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import android.support.v7.widget.AppCompatButton
+import android.databinding.Bindable
 import android.view.View
 import kotlinx.coroutines.experimental.*
 import kotlinx.coroutines.experimental.android.UI
+import org.athaliapps.models.Post
+import org.athaliapps.twilist.Utils.CoroutineHelper
 import org.athaliapps.twilist.local.LocalService
 import org.athaliapps.twilist.remote.JsonPlaceholderRemoteService
 import org.athaliapps.twilist.repository.PostRepository
-import java.util.*
 
 class MainViewModel : ViewModel() {
 
-    var text : MutableLiveData<String> = MutableLiveData()
+    val text : MutableLiveData<String> = MutableLiveData()
     private val stringBuilder = StringBuilder()
+    var onButtonClickHelper = CoroutineHelper({ loadPosts() })
 
-    fun onButtonClicked(view: View) {
-      doStuff()
+    var posts : MutableLiveData<List<Post>> = MutableLiveData()
+    private set(value) {
+        field = value
     }
 
-    fun onButtonClickedCustom () {
-        println("custom!d")
-        doStuff()
+    init {
+        val testPost = Post(123,456,"title", "ojeroweriworiweoirnwoeinr")
+        posts.value = listOf(testPost)
     }
 
-    private fun doStuff() = launch(UI) {
-        delay(2000)
-        println("hoy!")
-        text.value = "lalala " + Random().nextInt()
-    }
-
-    private suspend fun LoadPosts()
+    fun cancelLoad(v: View)
     {
-        val posts1 = PostRepository(JsonPlaceholderRemoteService(), LocalService()).GetAndRefreshPosts()
+        onButtonClickHelper.job?.cancel()
+    }
 
-        val test = posts1.map { it.id to it }
-        val posts = posts1 + posts1 + posts1 + posts1
-        println(test)
-
-        launch(UI) {
-            posts.forEach { stringBuilder.append("${it.title}\n") }
-            text.value = stringBuilder.toString()
+    private suspend fun loadPosts() {
+        launch(UI){
+            posts.value = PostRepository(JsonPlaceholderRemoteService(), LocalService()).GetAndRefreshPosts()
         }
     }
 }
