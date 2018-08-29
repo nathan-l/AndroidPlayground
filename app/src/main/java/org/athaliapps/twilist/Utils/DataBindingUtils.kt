@@ -7,10 +7,7 @@ import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.withContext
-import org.athaliapps.models.Post
-import org.athaliapps.twilist.ui.main.BaseAdapter
 import org.athaliapps.twilist.ui.main.BindableAdapter
-import org.athaliapps.twilist.ui.postsList.PostsListAdapter
 
 @BindingAdapter("customOnClickCoroutine")
 fun customOnClickCoroutine(btn: AppCompatButton, helper: CoroutineHelper) {
@@ -32,18 +29,6 @@ fun customOnClickCoroutine(btn: AppCompatButton, helper: CoroutineHelper) {
     }
 }
 
-@BindingAdapter("posts")
-fun setPosts(recyclerView: RecyclerView, data: List<Post>) {
-    val adapter = recyclerView.adapter ?: return
-
-//    if (adapter is BaseAdapter<*, *>) {
-//        adapter.setData(data)
-//    }
-    if(adapter is PostsListAdapter)
-    {
-        (recyclerView.adapter as PostsListAdapter).setData(data)
-    }
-}
 
 @BindingAdapter("data")
 fun <T> setRecyclerViewProperties(recyclerView: RecyclerView, data: T) {

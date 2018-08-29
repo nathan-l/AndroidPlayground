@@ -53,6 +53,7 @@
         android:layout_height="wrap_content"
         android:scrollbars="vertical"
         app:data="@{viewmodel.posts}"
+        app:vm="@{viewmodel}"
         app:layout_constraintTop_toBottomOf="@+id/datButton2"
         />
 </android.support.constraint.ConstraintLayout>

@@ -1,39 +1,26 @@
 package org.athaliapps.twilist.ui.postsList
 
-import android.databinding.DataBindingUtil
-import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.support.v7.util.DiffUtil
 import org.athaliapps.models.Post
 import org.athaliapps.twilist.R
-import org.athaliapps.twilist.databinding.PostListItemTemplateBinding
-import org.athaliapps.twilist.ui.main.BaseAdapter
 import org.athaliapps.twilist.ui.main.BindableAdapter
+import org.athaliapps.twilist.ui.main.GenericListAdapter
 
-class PostsListAdapter : RecyclerView.Adapter<PostsListAdapter.PostViewHolder>(), BindableAdapter<List<Post>>{
+class PostsListAdapter : GenericListAdapter<Post>(DiffCallback()), BindableAdapter<List<Post>> {
     override fun setData(data: List<Post>) {
-        postsList = data
-        notifyDataSetChanged()
+        this.submitList(data)
     }
 
-    private var postsList: List<Post> = listOf()
+    class DiffCallback : DiffUtil.ItemCallback<Post>() {
+        override fun areItemsTheSame(p0: Post, p1: Post): Boolean {
+            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
 
-    override fun getItemCount() = postsList.count()
-
-    override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-        holder.bind(postsList[position])
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
-        val binding: PostListItemTemplateBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context)
-                , R.layout.post_list_item_template, parent, false)
-        return PostViewHolder(binding)
-    }
-
-    class PostViewHolder(private val binding: PostListItemTemplateBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(p: Post) {
-            binding.post = p
-            binding.executePendingBindings()
+        override fun areContentsTheSame(p0: Post, p1: Post): Boolean {
+            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         }
     }
+
+    override fun getItemViewType(position: Int) = R.layout.post_list_item_template
+
 }
